@@ -50,7 +50,6 @@ public class Game {
     return Key;
     }
     private void processKey(KeyStroke key){
-        System.out.println(key);
 
         if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q'){
             //code to close the game
@@ -63,14 +62,11 @@ public class Game {
         }
 
         switch (key.getKeyType()){ //eixo dos Ys é invertido!
-            case ArrowUp: y--;
-            case ArrowDown: y++;
-            case ArrowRight: x++;
-            case ArrowLeft: x--;
+            case ArrowUp: y--; break;
+            case ArrowDown: y++; break;
+            case ArrowRight: x++; break;
+            case ArrowLeft: x--; break;
         }
-
-        System.out.print(x + "");
-        System.out.println(y);
 
     }
 }
