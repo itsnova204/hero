@@ -12,14 +12,13 @@ import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
 
 public class Game {
-
-    private int x = 10;
-    private int y = 10;
-
     Screen screen;
     boolean gameRunning = true;
+    Hero hero;
 
     Game() throws IOException {
+
+            //Terminal Stuff
 
             TerminalSize terminalSize = new TerminalSize(40,20);
             DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
@@ -29,6 +28,9 @@ public class Game {
             screen.setCursorPosition(null); // we don't need a cursor
             screen.startScreen(); // screens must be started
             screen.doResizeIfNecessary(); // resize screen if necessary
+
+            //Hero Stuff
+            hero = new Hero(10,10);
     }
 
     public void run() throws IOException {
@@ -41,7 +43,7 @@ public class Game {
 
     private void draw() throws IOException {
         screen.clear();
-        screen.setCharacter(x, y, TextCharacter.fromCharacter('X')[0]);
+        hero.draw(screen);
         screen.refresh();
     }
 
@@ -62,10 +64,10 @@ public class Game {
         }
 
         switch (key.getKeyType()){ //eixo dos Ys é invertido!
-            case ArrowUp: y--; break;
-            case ArrowDown: y++; break;
-            case ArrowRight: x++; break;
-            case ArrowLeft: x--; break;
+            case ArrowUp: hero.setY(hero.getY() - 1); break;
+            case ArrowDown: hero.setY(hero.getY() + 1); break;
+            case ArrowRight: hero.setX(hero.getX() + 1); break;
+            case ArrowLeft: hero.setX(hero.getX() - 1); break;
         }
 
     }
