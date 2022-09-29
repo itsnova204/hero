@@ -1,20 +1,17 @@
 import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
-
-
-
 import java.io.IOException;
 
 public class Game {
     Screen screen;
     boolean gameRunning = true;
     Hero hero;
+    Position position;
 
     Game() throws IOException {
 
@@ -30,7 +27,8 @@ public class Game {
             screen.doResizeIfNecessary(); // resize screen if necessary
 
             //Hero Stuff
-            hero = new Hero(10,10);
+            position = new Position(10,10);
+            hero = new Hero(position);
     }
 
     public void run() throws IOException {
@@ -39,12 +37,19 @@ public class Game {
             draw();
             processKey(readInput());
         }
+
+        screen.close();
+
     }
 
     private void draw() throws IOException {
         screen.clear();
         hero.draw(screen);
         screen.refresh();
+    }
+
+    private void moveHero(Position position) {
+        hero.setPosition(position);
     }
 
     private KeyStroke readInput() throws IOException {
@@ -64,10 +69,10 @@ public class Game {
         }
 
         switch (key.getKeyType()){ //eixo dos Ys é invertido!
-            case ArrowUp: hero.setY(hero.getY() - 1); break;
-            case ArrowDown: hero.setY(hero.getY() + 1); break;
-            case ArrowRight: hero.setX(hero.getX() + 1); break;
-            case ArrowLeft: hero.setX(hero.getX() - 1); break;
+            case ArrowUp: moveHero(hero.moveUp()); break;
+            case ArrowDown: moveHero(hero.moveDown()); break;
+            case ArrowLeft: moveHero(hero.moveLeft()); break;
+            case ArrowRight: moveHero(hero.moveRight()); break;
         }
 
     }

@@ -4,8 +4,8 @@ public class Application {
     public static void main(String[] args) {
 
         try{
-        Game jogo = new Game();
-        jogo.run();
+        Game game = new Game();
+        game.run();
         } catch (
         IOException e) {
             e.printStackTrace();
